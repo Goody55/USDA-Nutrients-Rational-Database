@@ -48,6 +48,7 @@ ON dsr.datasrc_id = dat.datasrc_id
 WHERE nutrdesc = 'Caffeine'
 GROUP BY 1, 2
 ORDER BY 3 DESC
+LIMIT 5
 
 
 /*4. Find the nutrient(s) and food item(s) whose publications have the 
@@ -145,7 +146,8 @@ OFFSET 10 FETCH FIRST 10 ROWS ONLY
 
 
 /*12. Return a table displaying the highest amount spent on nutrition description in the United State. 
-Using the obtained data, determine the highest,lowest and average amount spent?*/ 
+Using the obtained data, determine the highest,lowest and average amount spent?
+Where total amount spent is more that $8000.*/ 
 (SELECT MAX(total_amount_spent) AS highest_amt, MIN(total_amount_spent) AS lowest_amt,
 		   ROUND(AVG(total_amount_spent)::numeric, 2) AS average_amt
 FROM 
@@ -157,5 +159,6 @@ FROM
          ON nda.ndb_no = fde.ndb_no
          JOIN weight AS wgh
          ON fde.ndb_no = wgh.ndb_no
-         GROUP BY 1 
+         GROUP BY 1
+	 HAVING SUM(wgh.amount) > 8000
          ORDER BY 2 DESC) AS sub1)  
