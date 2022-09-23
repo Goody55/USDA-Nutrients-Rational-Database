@@ -161,4 +161,5 @@ FROM
          ON fde.ndb_no = wgh.ndb_no
          GROUP BY 1
 	 HAVING SUM(wgh.amount) > 8000
-         ORDER BY 2 DESC) AS sub1)  
+         ORDER BY 2 DESC
+	LIMIT 10) AS sub1)  
